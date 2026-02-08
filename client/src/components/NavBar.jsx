@@ -1,40 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import { assets } from "../assets/assets_frontend/assets";
 import { NavLink, useNavigate } from "react-router";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [token, setToken] = useState(true);
+
   return (
-    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400 ">
-      <img src={assets.logo} alt="" className="w-44 cursor-pointer " />
+    <div className="flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
+      <img src={assets.logo} alt="" className="w-44 cursor-pointer" />
 
       <ul className="hidden md:flex items-start gap-5 font-medium">
         <NavLink to="/">
-          <li className="py-1"> Home</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto  hidden " />
-        </NavLink>
-
+          {" "}
+          <li className="py-1"> Home</li>{" "}
+          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />{" "}
+        </NavLink>{" "}
         <NavLink to="/doctors">
-          <li className="py-1"> All Doctor</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />
-        </NavLink>
-
+          {" "}
+          <li className="py-1"> All Doctor</li>{" "}
+          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />{" "}
+        </NavLink>{" "}
         <NavLink to="/about">
-          <li className="py-1"> About</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />
-        </NavLink>
-
+          {" "}
+          <li className="py-1"> About</li>{" "}
+          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />{" "}
+        </NavLink>{" "}
         <NavLink to="/contact">
-          <li className="py-1"> Contact</li>
-          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />
+          {" "}
+          <li className="py-1"> Contact</li>{" "}
+          <hr className="border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden " />{" "}
         </NavLink>
       </ul>
 
-      <div className="flex items-center gap-4 ">
-        <button className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block" onClick={()=>navigate('/login')}>
-          {" "}
-          Create Account
-        </button>
+      <div className="flex items-center gap-4">
+        {token ? (
+          <div className="relative group flex items-center hover:cursor-pointer">
+            <img src={assets.profile_pic} alt="" className="w-8 rounded-full" />
+            <img src={assets.dropdown_icon} alt="" className="w-2.5 ml-1" />
+
+            {/* Dropdown */}
+            <div className="absolute right-0 top-10 pt-2 text-base font-medium text-gray-600 z-20 hidden group-hover:block">
+              <div className="min-w-48 bg-stone-100 rounded shadow-lg flex flex-col gap-3 p-4">
+                <p
+                  onClick={() => navigate("/my-profile")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Profile
+                </p>
+                <p
+                  onClick={() => navigate("/my-appointments")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  My Appointment
+                </p>
+                <p
+                  onClick={() => navigate("/logout")}
+                  className="hover:text-black cursor-pointer"
+                >
+                  Log Out
+                </p>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <button
+            className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block"
+            onClick={() => setToken(false)}
+          >
+            Create Account
+          </button>
+        )}
       </div>
     </div>
   );
